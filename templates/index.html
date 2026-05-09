@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Çok Oyunculu Kelime Oyunu</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1><i class="fas fa-gamepad"></i> Kelime Oyunu</h1>
+    
+    <div id="controls">
+        <input type="text" id="player-name" placeholder="Adınız (Örn: Neo)">
+        <select id="word-length">
+            <option value="5">5 Harf</option>
+            <option value="6">6 Harf</option>
+            <option value="7">7 Harf</option>
+        </select>
+        <button id="create-room"><i class="fas fa-plus"></i> Oda Kur</button>
+        <input type="text" id="room-input" placeholder="Oda Kodu">
+        <button id="join-room"><i class="fas fa-sign-in-alt"></i> Katıl</button>
+        <button id="next-round" style="display: none; background-color: #538d4e;">
+            <i class="fas fa-redo"></i> Sonraki Tur
+        </button>
+    </div>
+    
+    <h2 id="room-display"></h2>
+
+    <div class="main-layout">
+        <div id="game-board"></div>
+        
+        <div id="keyboard-container">
+            <div class="key-row">
+                <button class="key" data-key="Q">Q</button>
+                <button class="key" data-key="W">W</button>
+                <button class="key" data-key="E">E</button>
+                <button class="key" data-key="R">R</button>
+                <button class="key" data-key="T">T</button>
+                <button class="key" data-key="Y">Y</button>
+                <button class="key" data-key="U">U</button>
+                <button class="key" data-key="I">I</button>
+                <button class="key" data-key="O">O</button>
+                <button class="key" data-key="P">P</button>
+                <button class="key" data-key="Ğ">Ğ</button>
+                <button class="key" data-key="Ü">Ü</button>
+            </div>
+            <div class="key-row">
+                <button class="key" data-key="A">A</button>
+                <button class="key" data-key="S">S</button>
+                <button class="key" data-key="D">D</button>
+                <button class="key" data-key="F">F</button>
+                <button class="key" data-key="G">G</button>
+                <button class="key" data-key="H">H</button>
+                <button class="key" data-key="J">J</button>
+                <button class="key" data-key="K">K</button>
+                <button class="key" data-key="L">L</button>
+                <button class="key" data-key="Ş">Ş</button>
+                <button class="key" data-key="İ">İ</button>
+            </div>
+            <div class="key-row">
+                <button class="key action-key" data-key="ENTER">ENTER</button>
+                <button class="key" data-key="Z">Z</button>
+                <button class="key" data-key="X">X</button>
+                <button class="key" data-key="C">C</button>
+                <button class="key" data-key="V">V</button>
+                <button class="key" data-key="B">B</button>
+                <button class="key" data-key="N">N</button>
+                <button class="key" data-key="M">M</button>
+                <button class="key" data-key="Ö">Ö</button>
+                <button class="key" data-key="Ç">Ç</button>
+                <button class="key action-key" data-key="BACKSPACE"><i class="fas fa-backspace"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-layout">
+        <div id="scoreboard" style="display: none;">
+            <h3><i class="fas fa-trophy" style="color: gold;"></i> Puan Durumu</h3>
+            <ul id="score-list"></ul>
+        </div>
+
+        <div id="chat-container" style="display: none;">
+            <div id="chat-messages"></div>
+            <div id="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Mesaj yaz...">
+                <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="custom-modal" style="display: none;">
+        <div class="modal-content">
+            <p id="modal-message">Buraya mesaj gelecek</p>
+            <button id="modal-close-btn">Tamam</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}?v=1"></script>
+</body>
+</html>

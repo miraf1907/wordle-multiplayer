@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit, join_room
 import random
@@ -138,4 +139,5 @@ def mesaj_gonder(data):
         emit('yeni_mesaj', {'gonderen': oyuncu_adi, 'mesaj': mesaj}, room=oda_kodu)
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    socketio.run(app, host='0.0.0.0', port=port)

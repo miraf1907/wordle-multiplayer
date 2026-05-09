@@ -6,6 +6,7 @@ let currentGuess = [];
 let wordLength = 5;
 let currentRoom = null;
 let isGameOver = false;
+let isChecking = false;
 
 function showMessage(text) {
     document.getElementById('modal-message').innerHTML = text; 
@@ -109,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     socket.on('gecersiz_kelime', (data) => {
+        isChecking = false;
         const row = document.querySelectorAll('.row')[currentRow];
         row.classList.add('shake');
         setTimeout(() => row.classList.remove('shake'), 500);
@@ -146,6 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentRow++;
             currentTile = 0;
             currentGuess = [];
+            isChecking = false;
         }, (wordLength * 100) + 500);
     });
 
@@ -186,7 +189,7 @@ function handleInput(letter) {
         showMessage("Lütfen önce bir odaya katılın veya oda kurun!");
         return;
     }
-    if (isGameOver) return; 
+    if (isGameOver || isChecking) return; 
 
     if (letter === 'BACKSPACE') deleteLetter();
     else if (letter === 'ENTER') checkGuess();
@@ -218,6 +221,7 @@ function checkGuess() {
         setTimeout(() => row.classList.remove('shake'), 500);
         return;
     }
+    isChecking = true;
     const guessString = currentGuess.join('');
     socket.emit('tahmin_yap', { oda_kodu: currentRoom, tahmin: guessString, satir: currentRow });
 }
@@ -252,6 +256,7 @@ function resetGame() {
     currentRow = 0; 
     currentTile = 0; 
     currentGuess = [];
-    isGameOver = false; 
+    isGameOver = false;
+    isChecking = false; 
     document.querySelectorAll('.key').forEach(k => k.classList.remove('yesil', 'sari', 'gri'));
 }
